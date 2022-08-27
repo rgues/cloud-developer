@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
@@ -28,6 +28,23 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
+
+  app.get( "/filteredimage/", ( req: Request, res: Response ) => {
+    let { image_url } = req.query;
+
+    if ( !image_url ) {
+      return res.status(400).send(`image_url is required`);
+    }
+
+    filterImageFromURL(image_url).then(filterImagePath => {
+      deleteLocalFiles([filterImagePath]);
+      return res.status(200).sendFile(filterImagePath);
+    }).catch(err => {
+      return res.status(422).send(`image is malformed`);
+    })
+
+    
+  } );
 
   //! END @TODO1
   
