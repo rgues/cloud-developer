@@ -5,7 +5,7 @@ Udagram is a simple cloud application developed alongside the Udacity Cloud Engi
 The project is split into two part:
 1. [Github repository s](https://github.com/rgues/cloud-developer/tree/master/course-02/project/image-filter-starter-code)
 A basic Ionic client web application which consumes the RestAPI Backend. [Covered in the course]
-2. [EB URL](Udagramrguesdev-env.eba-pyifi3pc.us-east-1.elasticbeanstalk.com), The link of server instance deploy on EB ]
+2. [EB URL](http://Udagramrguesdev-env.eba-pyifi3pc.us-east-1.elasticbeanstalk.com), The link of server instance deploy on EB ]
 
 
 ## Tasks
