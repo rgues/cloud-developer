@@ -1,7 +1,6 @@
 import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
-
 (async () => {
 
   // Init the Express application
@@ -29,22 +28,26 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
+
   app.get( "/filteredimage/", ( req: Request, res: Response ) => {
+
     let { image_url } = req.query;
 
     if ( !image_url ) {
-      return res.status(400).send(`image_url is required`);
+      return res.status(400).send({message: `image_url is required` });
     }
 
-    filterImageFromURL(image_url).then(filterImagePath => {
-      deleteLocalFiles([filterImagePath]);
-      return res.status(200).sendFile(filterImagePath);
-    }).catch(err => {
-      return res.status(422).send(`image is malformed`);
-    })
-
-    
-  } );
+   filterImageFromURL(image_url.toString()).then(filterImagePath => { 
+        
+      return res.status(200).sendFile(filterImagePath, () => {
+          deleteLocalFiles([filterImagePath]);
+      }); 
+      
+    }).catch (err => {
+       return res.status(422).send({message :`image is malformed` , error : err});
+    });
+      
+  });
 
   //! END @TODO1
   
